@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+
+        <div class="image-section">
+            <img src="{{ image_path }}" alt="Uploaded Image">
+        </div>
+
+        <div class="result-section">
+            {% if label.lower() == 'no mask' or 'no' in label.lower() %}
+            <p class="bad">⚠️ This person is <strong>NOT</strong> wearing a mask.</p>
+            {% else %}
+            <p class="good">✅ This person <strong>IS</strong> wearing a mask.</p>
+            {% endif %}
+            <p class="confidence">Confidence: {{ '%.2f'|format(confidence * 100) }}%</p>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="btn">⏪ Go Back</a>
+    </div>
+</body>
+
+</html>
