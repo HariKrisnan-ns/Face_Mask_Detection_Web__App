@@ -1,17 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <title>Live Camera</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <div class="container">
+    <div class="container live-container">
         <h1>Live Camera Detection</h1>
-        <img src="{{ url_for('video_feed') }}" />
-        <a href="/">Back to Home</a>
+
+        <div class="video-wrapper">
+            <img src="{{ url_for('video_feed') }}" id="live-feed" alt="Live Camera Feed">
+            <div class="prediction-box" id="prediction-box">
+                <span id="prediction-text">Detecting...</span>
+            </div>
+        </div>
+
+        <a href="/" class="btn secondary-btn">Back to Home</a>
     </div>
+
+    <script>
+        // Fake prediction loop for demo — replace with WebSocket or fetch in real use
+        const predictions = [
+            "No Mask (0.12)",
+            "Mask (0.93)",
+            "Improper Mask (0.41)"
+        ];
+
+        let index = 0;
+        const textEl = document.getElementById("prediction-text");
+        const box = document.getElementById("prediction-box");
+
+        setInterval(() => {
+            textEl.innerText = predictions[index];
+            box.classList.remove("bounce");
+            void box.offsetWidth; // Force reflow to restart animation
+            box.classList.add("bounce");
+
+            index = (index + 1) % predictions.length;
+        }, 3000);
+    </script>
 </body>
 
 </html>

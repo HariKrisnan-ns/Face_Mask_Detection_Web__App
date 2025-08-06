@@ -1,38 +1,42 @@
-/* Italian inspired colors */
 :root {
-    --green: #008C45;
-    --white: #F4F5F0;
-    --red: #CD212A;
-    --blue: #007BFF;
-    --gray: #f2f2f2;
+    --dark-bg: #0d1117;
+    --blue-accent: #58a6ff;
+    --light-blue: #1f6feb;
+    --soft-white: #e6edf3;
+    --button-hover: #1c2a3a;
+    --box-bg: #161b22;
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--gray);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--soft-white);
     margin: 0;
     padding: 0;
     text-align: center;
+    animation: fadeIn 1.2s ease-in;
 }
 
 .container {
     max-width: 600px;
     margin: 40px auto;
-    background: var(--white);
+    background: var(--box-bg);
     padding: 40px 30px;
     border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    animation: slideUp 1s ease-out;
 }
 
 h1 {
     margin-bottom: 30px;
-    color: var(--green);
+    color: var(--blue-accent);
+    font-size: 2rem;
 }
 
 .action-area {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
     align-items: center;
 }
 
@@ -40,37 +44,146 @@ h1 {
 .live-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
     max-width: 400px;
+    animation: fadeInSlow 2s ease-in-out;
 }
 
 input[type="file"] {
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #fff;
+    border: 1px solid var(--blue-accent);
+    background: var(--dark-bg);
+    color: var(--soft-white);
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+    border-color: var(--light-blue);
 }
 
 .btn {
     padding: 12px;
-    background-color: var(--green);
-    color: white;
+    background-color: var(--light-blue);
+    color: var(--soft-white);
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: all 0.4s ease;
+    transform: scale(1);
 }
 
 .btn:hover {
-    background-color: #006c35;
+    background-color: var(--button-hover);
+    color: var(--blue-accent);
+    transform: scale(1.05);
 }
 
 .secondary-btn {
-    background-color: var(--red);
+    background-color: transparent;
+    color: var(--soft-white);
+    border: 1px solid var(--blue-accent);
 }
 
 .secondary-btn:hover {
-    background-color: #a9161c;
+    background-color: var(--blue-accent);
+    color: var(--dark-bg);
+}
+
+/* ===== Animations ===== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInSlow {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(60px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Live camera container overrides */
+.live-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.video-wrapper {
+    position: relative;
+    display: inline-block;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+}
+
+#live-feed {
+    max-width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+/* Prediction overlay box */
+.prediction-box {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background-color: rgba(88, 166, 255, 0.15);
+    color: var(--blue-accent);
+    padding: 8px 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    pointer-events: none;
+    backdrop-filter: blur(4px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Bounce animation on update */
+.prediction-box.bounce {
+    animation: bounceText 0.5s ease-in-out;
+}
+
+@keyframes bounceText {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
